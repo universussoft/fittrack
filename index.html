@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FitTrack - Personal Trainer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10B981">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <div class="language-btn" id="languageBtn">
+            <div class="language-flag" id="currentFlag">🇧🇷</div>
+            <span id="currentLanguage">PT</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="language-dropdown" id="languageDropdown">
+            <div class="language-option active" data-lang="pt">
+                <div class="language-flag">🇧🇷</div>
+                <span id="portugueseOption">Português</span>
+            </div>
+            <div class="language-option" data-lang="en">
+                <div class="language-flag">🇺🇸</div>
+                <span id="englishOption">English</span>
+            </div>
+            <div class="language-option" data-lang="es">
+                <div class="language-flag">🇪🇸</div>
+                <span id="spanishOption">Español</span>
+            </div>
+            <div class="language-option" data-lang="fr">
+                <div class="language-flag">🇫🇷</div>
+                <span id="frenchOption">Français</span>
+            </div>
+            <div class="language-option" data-lang="de">
+                <div class="language-flag">🇩🇪</div>
+                <span id="germanOption">Deutsch</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Button -->
+    <div class="support-container">
+        <button class="support-btn" id="supportBtn">
+            <i class="fas fa-heart"></i>
+            <span id="supportText">Apoiar App</span>
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user" id="userAvatarIcon"></i>
+                </div>
+                <div class="user-text">
+                    <h2 id="userName">Carregando...</h2>
+                    <p id="userAgeWeight">Perfil não configurado</p>
+                </div>
+            </div>
+            <div class="notification-btn" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <div class="notification-badge"></div>
+            </div>
+        </div>
+        
+        <div class="header-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="streakCount">0</div>
+                <div class="stat-label" id="streakLabel">Dias seguidos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="bmiValue">--</div>
+                <div class="stat-label">IMC</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="userHeight">--</div>
+                <div class="stat-label" id="heightLabel">Altura</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Tab Content: Home -->
+        <div id="home-tab" class="tab-content active">
+            <!-- Profile Completion Prompt -->
+            <div id="profileCompletion" class="profile-completion" style="display: none;">
+                <p class="completion-text" id="completionText">Complete seu perfil para receber treinos personalizados!</p>
+                <button class="completion-btn" id="completeProfileBtn">
+                    <span id="completeProfileText">Completar Perfil</span>
+                </button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section">
+                <div class="quick-actions">
+                    <a href="#" class="action-btn" data-action="editProfile">
+                        <div class="action-icon">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <div class="action-text" id="editProfileText">Editar Perfil</div>
+                    </a>
+                    <a href="#" class="action-btn" data-action="trainingPlan">
+                        <div class="action-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="action-text" id="myWorkoutText">Meu Treino</div>
+                    </a>
+                    <a href="#" class="action-btn" data-action="water">
+                        <div class="action-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="action-text" id="waterText">Água</div>
+                    </a>
+                    <a href="#" class="action-btn" data-action="timer">
+                        <div class="action-icon">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                        <div class="action-text" id="timerText">Timer</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Training Plan -->
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="recommendedWorkoutTitle">Treino Recomendado</h3>
+                    <a href="#" class="section-link" data-action="trainingPlan" id="seeAllText">Ver tudo</a>
+                </div>
+                
+                <div class="card">
+                    <div id="personalizedPlan">
+                        <p style="text-align: center; color: var(--gray-color);" id="completeProfileMessage">Complete seu perfil para ver seu treino personalizado</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Exercises -->
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="todaysExercisesTitle">Exercícios de Hoje</h3>
+                </div>
+                
+                <div class="exercise-list" id="todaysExercises">
+                    <!-- Gerado por JavaScript -->
+                </div>
+            </div>
+
+            <!-- Profile Summary -->
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="yourSummaryTitle">Seu Resumo</h3>
+                    <a href="#" class="section-link" data-action="editProfile" id="editText">Editar</a>
+                </div>
+                
+                <div class="card">
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="summaryAge">--</div>
+                            <div class="profile-stat-label" id="ageLabel">Idade</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="summaryWeight">--</div>
+                            <div class="profile-stat-label" id="weightLabel">Peso</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="summaryHeight">--</div>
+                            <div class="profile-stat-label" id="heightLabel2">Altura</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="summaryBMI">--</div>
+                            <div class="profile-stat-label">IMC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Profile -->
+        <div id="profile-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="myProfileTitle">Meu Perfil</h3>
+                </div>
+                
+                <div class="card">
+                    <div class="user-info" style="margin-bottom: 20px;">
+                        <div class="user-avatar" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                            <i class="fas fa-user" id="profileAvatarIcon"></i>
+                        </div>
+                        <div class="user-text">
+                            <h2 id="profileUserName">Usuário</h2>
+                            <p id="profileUserDetails">Detalhes do perfil</p>
+                        </div>
+                    </div>
+                    
+                    <form class="profile-form" id="profileForm">
+                        <div class="input-group">
+                            <label class="input-label" for="name">
+                                <span id="fullNameLabel">Nome Completo</span>
+                                <span id="nameCharCount">0/50</span>
+                            </label>
+                            <input type="text" class="input-field" id="name" placeholder="Seu nome completo" maxlength="50" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="age">
+                                <span id="ageLabelForm">Idade</span>
+                                <span id="yearsText">anos</span>
+                            </label>
+                            <input type="number" class="input-field" id="age" placeholder="Ex: 25" min="10" max="120" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="weight">
+                                <span id="weightLabelForm">Peso</span>
+                                <span id="kgText">kg</span>
+                            </label>
+                            <input type="number" class="input-field" id="weight" placeholder="Ex: 70" min="30" max="300" step="0.1" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="height">
+                                <span id="heightLabelForm">Altura</span>
+                                <span id="cmText">cm</span>
+                            </label>
+                            <input type="number" class="input-field" id="height" placeholder="Ex: 175" min="100" max="250" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="gender">
+                                <span id="genderLabel">Gênero</span>
+                            </label>
+                            <select class="input-field" id="gender">
+                                <option value="">Selecione</option>
+                                <option value="male" id="maleOption">Masculino</option>
+                                <option value="female" id="femaleOption">Feminino</option>
+                                <option value="other" id="otherOption">Outro</option>
+                                <option value="prefer-not" id="preferNotOption">Prefiro não informar</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="activity">
+                                <span id="activityLevelLabel">Nível de Atividade</span>
+                            </label>
+                            <select class="input-field" id="activity">
+                                <option value="sedentary" id="sedentaryOption">Sedentário (pouco ou nenhum exercício)</option>
+                                <option value="light" id="lightOption">Levemente ativo (exercício leve 1-3 dias/semana)</option>
+                                <option value="moderate" selected id="moderateOption">Moderadamente ativo (exercício moderado 3-5 dias/semana)</option>
+                                <option value="active" id="activeOption">Muito ativo (exercício intenso 6-7 dias/semana)</option>
+                                <option value="very-active" id="veryActiveOption">Extremamente ativo (exercício muito intenso ou trabalho físico)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="goal">
+                                <span id="mainGoalLabel">Objetivo Principal</span>
+                            </label>
+                            <select class="input-field" id="goal">
+                                <option value="weight-loss" id="weightLossOption">Perda de peso</option>
+                                <option value="muscle-gain" selected id="muscleGainOption">Ganho muscular</option>
+                                <option value="maintenance" id="maintenanceOption">Manutenção</option>
+                                <option value="endurance" id="enduranceOption">Melhorar resistência</option>
+                                <option value="health" id="healthOption">Saúde geral</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn">
+                            <i class="fas fa-save"></i> <span id="saveProfileText">Salvar Perfil</span>
+                        </button>
+                        
+                        <button type="button" class="btn btn-secondary" id="clearProfileBtn" style="margin-top: 10px;">
+                            <i class="fas fa-trash-alt"></i> <span id="clearDataText">Limpar Dados</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Training -->
+        <div id="training-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="personalizedTrainingTitle">Treinos Personalizados</h3>
+                </div>
+                
+                <div class="training-plan" id="trainingPlanContent">
+                    <!-- Conteúdo gerado por JavaScript -->
+                </div>
+                
+                <div class="card">
+                    <h4 style="margin-bottom: 16px;" id="recommendedExercisesTitle">Exercícios Recomendados</h4>
+                    <div class="exercise-list" id="recommendedExercises">
+                        <!-- Lista gerada por JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Exercises -->
+        <div id="exercises-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="exerciseLibraryTitle">Biblioteca de Exercícios</h3>
+                </div>
+                
+                <div class="exercise-list" id="exerciseLibrary">
+                    <!-- Biblioteca gerada por JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Progress -->
+        <div id="progress-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="progressTitle">Seu Progresso</h3>
+                </div>
+                
+                <div class="card">
+                    <h4 id="weightHistoryTitle">Histórico de Peso</h4>
+                    <div class="progress-chart" id="weightChart">
+                        <!-- Gráfico gerado por JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 id="bmiCalculatorTitle">Calculadora de IMC</h4>
+                    <form class="profile-form" id="bmiCalculatorForm">
+                        <div class="input-group">
+                            <label class="input-label" for="bmiWeight">
+                                <span id="bmiWeightLabel">Peso (kg)</span>
+                            </label>
+                            <input type="number" class="input-field" id="bmiWeight" placeholder="Ex: 70" min="30" max="300" step="0.1">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="bmiHeight">
+                                <span id="bmiHeightLabel">Altura (cm)</span>
+                            </label>
+                            <input type="number" class="input-field" id="bmiHeight" placeholder="Ex: 175" min="100" max="250">
+                        </div>
+                        
+                        <button type="button" class="btn" id="calculateBmiBtn">
+                            <i class="fas fa-calculator"></i> <span id="calculateBmiText">Calcular IMC</span>
+                        </button>
+                    </form>
+                    
+                    <div class="bmi-result" id="bmiResult">
+                        <div class="bmi-value" id="bmiValueResult">--</div>
+                        <div class="bmi-category" id="bmiCategory">--</div>
+                        <div class="bmi-description" id="bmiDescription">--</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 id="recentActivityTitle">Atividade Recente</h4>
+                    <div class="weight-history" id="activityHistory">
+                        <!-- Histórico gerado por JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Settings -->
+        <div id="settings-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title" id="settingsTitle">Configurações</h3>
+                </div>
+                
+                <div class="settings-list">
+                    <div class="setting-item" data-action="language">
+                        <div class="setting-info">
+                            <div class="setting-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div class="setting-details">
+                                <h4 id="languageSettingsTitle">Idioma / Language</h4>
+                                <p id="languageSettingsDesc">Altere o idioma do aplicativo</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    
+                    <div class="setting-item" data-action="support">
+                        <div class="setting-info">
+                            <div class="setting-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="setting-details">
+                                <h4 id="supportSettingsTitle">Apoiar o App</h4>
+                                <p id="supportSettingsDesc">Ajude a manter o app gratuito</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    
+                    <div class="setting-item" data-action="notifications">
+                        <div class="setting-info">
+                            <div class="setting-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="setting-details">
+                                <h4 id="notificationsTitle">Notificações</h4>
+                                <p id="notificationsDesc">Lembretes de exercícios e água</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    
+                    <div class="setting-item" data-action="privacy">
+                        <div class="setting-info">
+                            <div class="setting-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="setting-details">
+                                <h4 id="privacyTitle">Privacidade</h4>
+                                <p id="privacyDesc">Seus dados estão seguros localmente</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    
+                    <div class="setting-item" data-action="about">
+                        <div class="setting-info">
+                            <div class="setting-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="setting-details">
+                                <h4 id="aboutTitle">Sobre o App</h4>
+                                <p id="aboutDesc">FitTrack v1.0 - Personal Trainer Gratuito</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 20px;">
+                    <h4 id="dataManagementTitle">Gerenciamento de Dados</h4>
+                    <p style="margin-bottom: 16px; color: var(--gray-color); font-size: 0.9rem;" id="dataManagementDesc">
+                        Todos os seus dados são armazenados localmente no seu dispositivo. Eles nunca são enviados para servidores externos.
+                    </p>
+                    <button class="btn btn-secondary" id="exportDataBtn">
+                        <i class="fas fa-download"></i> <span id="exportDataText">Exportar Dados</span>
+                    </button>
+                    <button class="btn btn-secondary" id="importDataBtn" style="margin-top: 10px;">
+                        <i class="fas fa-upload"></i> <span id="importDataText">Importar Dados</span>
+                    </button>
+                    <button class="btn btn-secondary" id="clearAllDataBtn" style="margin-top: 10px; background-color: var(--accent-color);">
+                        <i class="fas fa-trash"></i> <span id="clearAllDataText">Limpar Todos os Dados</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" data-tab="home">
+            <div class="nav-icon"><i class="fas fa-home"></i></div>
+            <div id="homeNavText">Início</div>
+        </a>
+        <a href="#" class="nav-item" data-tab="profile">
+            <div class="nav-icon"><i class="fas fa-user-edit"></i></div>
+            <div id="profileNavText">Perfil</div>
+        </a>
+        <a href="#" class="nav-item" data-tab="training">
+            <div class="nav-icon"><i class="fas fa-dumbbell"></i></div>
+            <div id="trainingNavText">Treino</div>
+        </a>
+        <a href="#" class="nav-item" data-tab="progress">
+            <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+            <div id="progressNavText">Progresso</div>
+        </a>
+        <a href="#" class="nav-item" data-tab="settings">
+            <div class="nav-icon"><i class="fas fa-cog"></i></div>
+            <div id="settingsNavText">Config</div>
+        </a>
+    </nav>
+
+    <!-- Exercise Detail Modal -->
+    <div id="exercise-detail-modal" class="modal">
+        <div class="modal-content exercise-detail">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exerciseDetailTitle">Exercício</h3>
+                <div class="modal-close" data-modal="exercise-detail-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body" id="exerciseDetailBody">
+                <!-- Conteúdo gerado por JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Water Tracker Modal -->
+    <div id="water-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="waterTrackerTitle">Controle de Hidratação</h3>
+                <div class="modal-close" data-modal="water-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="water-tracker">
+                    <div class="water-goal" id="water-goal">2.0L</div>
+                    <p id="waterDailyGoal">Meta diária de água</p>
+                    
+                    <div class="water-cups" id="water-cups">
+                        <!-- Copos serão gerados por JavaScript -->
+                    </div>
+                    
+                    <div style="margin: 25px 0;">
+                        <button class="btn" id="add-water">
+                            <i class="fas fa-plus"></i> <span id="add250mlText">Adicionar 250ml</span>
+                        </button>
+                        <button class="btn btn-secondary" id="reset-water">
+                            <i class="fas fa-redo"></i> <span id="resetTodayText">Zerar Hoje</span>
+                        </button>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="water-consumed">0.0</div>
+                            <div class="profile-stat-label" id="consumedLabel">Consumido</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="water-remaining">2.0</div>
+                            <div class="profile-stat-label" id="remainingLabel">Restante</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="water-percentage">0%</div>
+                            <div class="profile-stat-label" id="completeLabel">Completo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer Modal -->
+    <div id="timer-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="timerTitle">Timer de Exercício</h3>
+                <div class="modal-close" data-modal="timer-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="timer-container">
+                    <div class="timer-display" id="workout-timer">05:00</div>
+                    <div class="timer-controls">
+                        <button class="timer-btn" id="start-timer">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="timer-btn secondary" id="pause-timer">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button class="timer-btn accent" id="reset-timer">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                    <div class="preset-times">
+                        <button class="preset-btn" data-time="30">30s</button>
+                        <button class="preset-btn" data-time="60">1min</button>
+                        <button class="preset-btn" data-time="180">3min</button>
+                        <button class="preset-btn" data-time="300">5min</button>
+                        <button class="preset-btn" data-time="600">10min</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Modal -->
+    <div id="support-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="supportModalTitle">Apoiar o FitTrack</h3>
+                <div class="modal-close" data-modal="support-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body support-modal">
+                <div class="support-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                
+                <p class="support-text" id="supportMessage1">
+                    O FitTrack é um aplicativo gratuito desenvolvido com paixão para ajudar pessoas a melhorarem sua saúde e condicionamento físico.
+                </p>
+                
+                <p class="support-text" id="supportMessage2">
+                    Se você encontrou valor no aplicativo e gostaria de apoiar seu desenvolvimento e manutenção, considere fazer uma contribuição.
+                </p>
+                
+                <div class="support-details">
+                    <h4><i class="fas fa-coffee"></i> <span id="supportWhyTitle">Por que apoiar?</span></h4>
+                    <ul style="padding-left: 20px; margin: 0;">
+                        <li id="supportReason1">Manter o aplicativo gratuito para todos</li>
+                        <li id="supportReason2">Desenvolver novos recursos e exercícios</li>
+                        <li id="supportReason3">Melhorar a experiência do usuário</li>
+                        <li id="supportReason4">Manter os servidores funcionando</li>
+                    </ul>
+                </div>
+                
+                <div class="support-options">
+                    <a href="https://buymeacoffee.com/universussoft" target="_blank" class="support-option" id="buyCoffeeOption">
+                        <div class="support-option-icon">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="support-option-text">
+                            <div class="support-option-title" id="buyCoffeeTitle">Buy Me a Coffee</div>
+                            <div class="support-option-desc" id="buyCoffeeDesc">Apoio único (a partir de €3)</div>
+                        </div>
+                        <i class="fas fa-external-link-alt" style="color: var(--gray-color);"></i>
+                    </a>
+                    
+                    <div class="support-option" id="shareAppOption" style="cursor: pointer;">
+                        <div class="support-option-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="support-option-text">
+                            <div class="support-option-title" id="shareAppTitle">Compartilhar App</div>
+                            <div class="support-option-desc" id="shareAppDesc">Ajude outras pessoas a descobrirem</div>
+                        </div>
+                    </div>
+                    
+                    <div class="support-option" id="feedbackOption" style="cursor: pointer;">
+                        <div class="support-option-icon">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="support-option-text">
+                            <div class="support-option-title" id="feedbackTitle">Dar Feedback</div>
+                            <div class="support-option-desc" id="feedbackDesc">Sugestões para melhorias</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 20px; font-size: 0.85rem; color: var(--gray-color);" id="supportThankYou">
+                    Obrigado por usar o FitTrack! Sua saúde é nossa prioridade.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Modal -->
+    <div id="language-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="languageModalTitle">Selecionar Idioma</h3>
+                <div class="modal-close" data-modal="language-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="language-selection">
+                    <div class="language-option large" data-lang="pt">
+                        <div class="language-flag">🇧🇷</div>
+                        <div class="language-text">
+                            <h4>Português</h4>
+                            <p>Brasil / Portugal</p>
+                        </div>
+                    </div>
+                    <div class="language-option large" data-lang="en">
+                        <div class="language-flag">🇺🇸</div>
+                        <div class="language-text">
+                            <h4>English</h4>
+                            <p>United States</p>
+                        </div>
+                    </div>
+                    <div class="language-option large" data-lang="es">
+                        <div class="language-flag">🇪🇸</div>
+                        <div class="language-text">
+                            <h4>Español</h4>
+                            <p>España / Latinoamérica</p>
+                        </div>
+                    </div>
+                    <div class="language-option large" data-lang="fr">
+                        <div class="language-flag">🇫🇷</div>
+                        <div class="language-text">
+                            <h4>Français</h4>
+                            <p>France</p>
+                        </div>
+                    </div>
+                    <div class="language-option large" data-lang="de">
+                        <div class="language-flag">🇩🇪</div>
+                        <div class="language-text">
+                            <h4>Deutsch</h4>
+                            <p>Deutschland</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div id="privacy-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="privacyModalTitle">Política de Privacidade</h3>
+                <div class="modal-close" data-modal="privacy-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="privacy-content">
+                    <h4 id="privacySection1">Armazenamento de Dados</h4>
+                    <p id="privacyText1">Todos os dados do aplicativo são armazenados localmente no seu dispositivo usando localStorage. Nenhuma informação pessoal é enviada para servidores externos ou compartilhada com terceiros.</p>
+                    
+                    <h4 id="privacySection2">Dados Coletados</h4>
+                    <p id="privacyText2">O aplicativo coleta apenas as informações que você fornece voluntariamente no perfil: nome, idade, peso, altura, gênero, nível de atividade e objetivos. Esses dados são usados exclusivamente para gerar treinos personalizados e acompanhar seu progresso.</p>
+                    
+                    <h4 id="privacySection3">Permissões</h4>
+                    <p id="privacyText3">O aplicativo não requer permissões especiais do dispositivo. Funciona inteiramente offline após o carregamento inicial.</p>
+                    
+                    <h4 id="privacySection4">Backup de Dados</h4>
+                    <p id="privacyText4">Você pode exportar seus dados para um arquivo JSON para backup. O backup é armazenado apenas no seu dispositivo e você é responsável por sua segurança.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="aboutModalTitle">Sobre o FitTrack</h3>
+                <div class="modal-close" data-modal="about-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body about-modal">
+                <div class="app-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                
+                <h3>FitTrack v1.0</h3>
+                <p id="aboutAppDesc">Personal Trainer Gratuito</p>
+                
+                <div class="about-details">
+                    <h4 id="aboutFeaturesTitle">Recursos Principais</h4>
+                    <ul>
+                        <li id="aboutFeature1">Perfil de saúde personalizado</li>
+                        <li id="aboutFeature2">Treinos adaptados ao seu IMC</li>
+                        <li id="aboutFeature3">Controle de hidratação</li>
+                        <li id="aboutFeature4">Timer de exercícios</li>
+                        <li id="aboutFeature5">Acompanhamento de progresso</li>
+                        <li id="aboutFeature6">Sistema de backup e restauração</li>
+                        <li id="aboutFeature7">Suporte a 5 idiomas</li>
+                    </ul>
+                    
+                    <h4 id="aboutCreditsTitle">Créditos</h4>
+                    <p id="aboutCreditsText">Desenvolvido por UniversusSoft com ❤️</p>
+                    <p id="aboutContactText">Contato: support@universussoft.com</p>
+                    
+                    <p id="aboutDisclaimer">Este aplicativo é fornecido gratuitamente. As informações de saúde são apenas para fins educacionais. Consulte um profissional de saúde antes de iniciar qualquer programa de exercícios.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="export-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exportModalTitle">Exportar Dados</h3>
+                <div class="modal-close" data-modal="export-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p id="exportDescription">Seus dados serão exportados em formato JSON. Guarde este arquivo em um local seguro para backup.</p>
+                
+                <div class="data-preview">
+                    <h4 id="previewTitle">Prévia dos Dados</h4>
+                    <pre id="dataPreview"></pre>
+                </div>
+                
+                <button class="btn" id="downloadDataBtn">
+                    <i class="fas fa-download"></i> <span id="downloadText">Baixar Arquivo</span>
+                </button>
+                
+                <button class="btn btn-secondary" id="copyDataBtn" style="margin-top: 10px;">
+                    <i class="fas fa-copy"></i> <span id="copyText">Copiar para Área de Transferência</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="import-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="importModalTitle">Importar Dados</h3>
+                <div class="modal-close" data-modal="import-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p id="importDescription">Selecione um arquivo JSON de backup para importar seus dados. Isso substituirá todos os dados atuais.</p>
+                
+                <div class="import-options">
+                    <div class="file-upload">
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                        <button class="btn btn-secondary" id="selectFileBtn">
+                            <i class="fas fa-file-import"></i> <span id="selectFileText">Selecionar Arquivo</span>
+                        </button>
+                        <div id="fileName" style="margin-top: 10px; font-size: 0.9rem; color: var(--gray-color);"></div>
+                    </div>
+                    
+                    <div class="text-import" style="margin-top: 20px;">
+                        <h4 id="pasteDataTitle">Ou cole os dados JSON:</h4>
+                        <textarea id="importTextarea" placeholder="Cole seus dados JSON aqui..." rows="6" style="width: 100%; padding: 12px; border: 1px solid #D1D5DB; border-radius: 8px; font-family: monospace; resize: vertical;"></textarea>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn" id="importDataConfirmBtn" disabled>
+                        <i class="fas fa-check"></i> <span id="importConfirmText">Importar Dados</span>
+                    </button>
+                    <button class="btn btn-secondary" id="validateDataBtn" style="margin-top: 10px;">
+                        <i class="fas fa-search"></i> <span id="validateText">Validar Arquivo</span>
+                    </button>
+                </div>
+                
+                <div id="importStatus" style="margin-top: 15px; padding: 10px; border-radius: 8px; display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Data Modal -->
+    <div id="clear-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="clearModalTitle">Confirmar Limpeza de Dados</h3>
+                <div class="modal-close" data-modal="clear-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="warning-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                
+                <p id="clearWarningText" style="text-align: center; font-size: 1.1rem; margin: 20px 0;">
+                    <strong>Atenção!</strong> Esta ação apagará todos os seus dados do aplicativo.
+                </p>
+                
+                <div class="warning-details">
+                    <h4 id="whatWillBeDeleted">O que será apagado:</h4>
+                    <ul>
+                        <li id="clearItem1">Seu perfil completo</li>
+                        <li id="clearItem2">Histórico de exercícios</li>
+                        <li id="clearItem3">Progresso e estatísticas</li>
+                        <li id="clearItem4">Metas de água</li>
+                        <li id="clearItem5">Preferências do aplicativo</li>
+                    </ul>
+                    
+                    <p id="clearIrreversible">Esta ação não pode ser desfeita!</p>
+                </div>
+                
+                <div class="clear-options">
+                    <button class="btn" id="confirmClearBtn" style="background-color: var(--accent-color);">
+                        <i class="fas fa-trash"></i> <span id="clearEverythingText">Apagar Tudo</span>
+                    </button>
+                    <button class="btn btn-secondary" id="cancelClearBtn" style="margin-top: 10px;">
+                        <i class="fas fa-times"></i> <span id="cancelText">Cancelar</span>
+                    </button>
+                </div>
+                
+                <p style="margin-top: 20px; font-size: 0.85rem; color: var(--gray-color);" id="backupAdvice">
+                    Certifique-se de ter feito backup dos seus dados antes de continuar.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div id="toast-message">Mensagem</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
