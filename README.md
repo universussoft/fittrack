@@ -1,153 +1,62 @@
-FitTrack - Personal Trainer App
-A complete, mobile-optimized fitness application with personalized workout plans based on BMI.
+# FitTrack - Free Personal Trainer App
 
-📁 Project Structure
-text
-fittrack/
-│
-├── index.html              # Main application file
-├── style.css              # All CSS styles
-├── script.js             # Complete JavaScript functionality
-├── manifest.json         # PWA manifest
-├── sw.js                # Service Worker for offline functionality
-│
-├── README.md            # This file
-├── LICENSE              # MIT License
-│
-└── screenshots/         # Application screenshots
-    ├── home-screen.png
-    ├── profile-screen.png
-    ├── workout-screen.png
-    └── settings-screen.png
-🚀 Quick Start
-Clone or download the repository
+<div align="center">
 
-Open index.html in any modern web browser
+![FitTrack Logo](https://img.shields.io/badge/FitTrack-Personal%20Trainer-10B981?style=for-the-badge&logo=heart&logoColor=white)
+![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
 
-No installation required - works immediately!
+**A complete, mobile-optimized fitness application with personalized workout plans based on BMI**
 
-✨ Features
-🏋️ Personalized Fitness
-BMI-based workout plans (underweight, normal, overweight, obesity levels)
+[Live Demo](#) • [Features](#features) • [Installation](#installation) • [Usage](#usage)
 
-20+ exercises with detailed instructions and tips
+</div>
 
-Personal profile with age, weight, height, and activity level tracking
+## 📱 Overview
 
-Progress monitoring with weight history and charts
+FitTrack is a comprehensive fitness application that provides personalized workout plans based on your Body Mass Index (BMI). It's completely free, works offline, and supports 5 languages. The app offers everything you need for your fitness journey - from exercise tracking to hydration monitoring - all in one place.
 
-🌐 Multilingual Support
-5 languages: Portuguese, English, Spanish, French, German
+## ✨ Features
 
-Fully translated interface including all exercises and instructions
+### 🏋️ **Personalized Workouts**
+- **BMI-based exercise plans** tailored to your body composition
+- **20+ exercises** with detailed instructions and safety tips
+- **Adaptive difficulty** (Beginner, Intermediate, Advanced)
+- **Exercise categories**: Cardio, Strength, Flexibility, Balance
 
-Language selector with country flags
+### 🌐 **Multilingual Support**
+- **5 languages**: Portuguese, English, Spanish, French, German
+- **Fully translated** exercise instructions and interface
+- **Real-time language switching** without page reload
+- **Country flags** for easy language selection
 
-💧 Health Tracking
-Hydration tracker with visual water cups
+### 📊 **Health Tracking**
+- **BMI Calculator** with category explanations
+- **Weight History** with visual progress charts
+- **Hydration Tracker** with daily water goals
+- **Exercise Timer** with preset intervals
+- **Daily Streak Counter** for motivation
 
-Exercise timer with preset intervals (30s, 1min, 3min, 5min, 10min)
+### 🔒 **Data Management**
+- **Local storage only** - your data never leaves your device
+- **Backup & Restore** via JSON export/import
+- **Complete privacy** - no accounts, no tracking
+- **Offline functionality** - works anywhere, anytime
 
-BMI calculator with category explanations
+### 📱 **Mobile First Design**
+- **Responsive interface** for all screen sizes
+- **PWA ready** - install as native app
+- **Touch-optimized** controls
+- **Smooth animations** and transitions
 
-Daily streak counter for motivation
+## 🚀 Quick Start
 
-🔒 Data Management
-Local storage - all data stays on your device
+### Option 1: Use Online
+Simply visit the Live Demo URL in your browser (coming soon).
 
-Backup & Restore via JSON export/import
-
-Clear data option with confirmation
-
-No internet required after first load
-
-📱 Mobile Optimized
-Responsive design for all screen sizes
-
-PWA ready - install as app on mobile/desktop
-
-Touch-friendly interface
-
-Offline functionality
-
-🛠️ Technical Details
-Frontend: Pure HTML5, CSS3, Vanilla JavaScript
-
-Storage: LocalStorage API
-
-Offline: Service Worker caching
-
-Icons: Font Awesome 6.4
-
-Fonts: Google Fonts (Inter)
-
-No frameworks - zero dependencies!
-
-📋 Requirements
-Modern web browser (Chrome 80+, Firefox 75+, Safari 13+)
-
-5MB storage space
-
-Optional: Internet connection for initial font/icons load
-
-🎯 Use Cases
-Personal fitness tracking without subscriptions
-
-BMI-appropriate exercise recommendations
-
-Daily water intake monitoring
-
-Exercise interval timing
-
-Multilingual fitness support
-
-Offline workout companion
-
-🔧 Development
-To modify the app:
-
-Edit index.html for structure changes
-
-Modify style.css for styling
-
-Update script.js for functionality
-
-Test in browser - no build process needed!
-
-Adding New Exercises
-Edit the EXERCISES_BY_BMI and EXERCISE_LIBRARY objects in script.js, including translations for all 5 languages.
-
-Adding New Language
-Add new translation object to TRANSLATIONS in script.js following existing structure.
-
-🤝 Contributing
-Fork the repository
-
-Create a feature branch
-
-Make changes with clear commit messages
-
-Submit a pull request
-
-📄 License
-MIT License - see LICENSE file for details.
-
-🙏 Support
-If you find this app helpful, consider supporting development:
-
-Buy Me a Coffee
-
-Share with friends
-
-Star the repository
-
-Report issues or suggest features
-
-📞 Contact
-Email: support@universussoft.com
-
-Issues: GitHub Issues page
-
-Feature Requests: Open an issue
-
-Built with ❤️ by UniversusSoft - Making fitness accessible to everyone, everywhere.
+### Option 2: Run Locally
+1. **Download the files**
+   ```bash
+   git clone https://github.com/universussoft/fittrack.git
+   cd fittrack
